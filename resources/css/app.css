@@ -1,0 +1,5 @@
+@import 'tailwindcss';
+
+/* Kelas badge status ada di file PHP (StockStatus), jadi ikut dipindai. */
+@source '../views';
+@source '../../app';
