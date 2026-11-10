@@ -146,7 +146,7 @@ class StockListLivewireTest extends TestCase
         $this->lw()->call('adjust', $stock->id, 10);
         $this->assertSame('available', $stock->refresh()->status->value);
 
-        $this->lw()->call('adjust', $stock->id, -15)->assertHasErrors(['adjust']);
+        $this->lw()->call('adjust', $stock->id, -16)->assertHasErrors(['adjust']);
         $this->assertSame(15, $stock->refresh()->quantity);
 
         $this->lw()->call('adjust', $stock->id, -15);

@@ -54,7 +54,11 @@ class StockExcelService
     public function parse(string $path): array
     {
         try {
-            $rows = IOFactory::load($path)->getActiveSheet()->toArray(null, true, false, false);
+            // Hanya izinkan reader Xlsx/Xls. Tanpa pembatasan ini, file teks biasa akan
+            // "berhasil" dibaca sebagai CSV sehingga tidak pernah dianggap rusak.
+            $rows = IOFactory::load($path, 0, [IOFactory::READER_XLSX, IOFactory::READER_XLS])
+                ->getActiveSheet()
+                ->toArray(null, true, false, false);
         } catch (Throwable) {
             return ['rows' => [], 'errors' => ['File Excel tidak dapat dibaca. Gunakan file .xlsx atau .xls yang valid.']];
         }
