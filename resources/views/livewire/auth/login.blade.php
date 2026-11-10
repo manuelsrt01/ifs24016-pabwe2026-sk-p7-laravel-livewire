@@ -10,7 +10,7 @@
             <label for="login-password" class="label">Password</label>
             <div class="relative">
                 <input id="login-password" type="password" :type="show ? 'text' : 'password'" wire:model="password" autocomplete="current-password" class="input pr-16">
-                <button type="button" @click="show = !show" class="absolute inset-y-0 right-0 px-4 text-xs font-semibold text-slate-500 hover:text-ink" x-text="show ? 'Sembunyi' : 'Tampil'">Tampil</button>
+                <button type="button" @click="show = !show" class="absolute inset-y-0 right-0 px-4 text-xs font-semibold text-slate-600 hover:text-ink" x-text="show ? 'Sembunyi' : 'Tampil'">Tampil</button>
             </div>
             @error('password') <p class="mt-1.5 text-sm font-medium text-red-600">{{ $message }}</p> @enderror
         </div>

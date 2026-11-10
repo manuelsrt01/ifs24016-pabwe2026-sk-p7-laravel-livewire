@@ -22,7 +22,7 @@
                 <label for="register-password" class="label">Password</label>
                 <input id="register-password" type="password" wire:model="password" autocomplete="new-password" class="input">
                 @error('password') <p class="mt-1.5 text-sm font-medium text-red-600">{{ $message }}</p> @enderror
-                <p class="mt-1.5 text-xs text-slate-500">Minimal 8 karakter.</p>
+                <p class="mt-1.5 text-xs text-slate-600">Minimal 8 karakter.</p>
             </div>
             <div>
                 <label for="register-password_confirmation" class="label">Ulangi password</label>

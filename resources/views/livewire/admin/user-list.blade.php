@@ -2,8 +2,8 @@
     <x-page-header title="Pengguna" subtitle="Pilih pengguna untuk melihat stok miliknya. Halaman ini hanya untuk dibaca." />
 
     <div class="relative sm:w-96">
-        <span class="pointer-events-none absolute inset-y-0 left-3.5 grid place-items-center text-slate-400"><x-icon name="search" size="h-4 w-4" /></span>
-        <input type="search" wire:model.live.debounce.300ms="search" placeholder="Cari nama, username, atau email" class="input pl-10">
+        <span class="pointer-events-none absolute inset-y-0 left-3.5 grid place-items-center text-slate-600"><x-icon name="search" size="h-4 w-4" /></span>
+        <input type="search" aria-label="Pencarian" wire:model.live.debounce.300ms="search" placeholder="Cari nama, username, atau email" class="input pl-10">
     </div>
 
     <section class="panel overflow-hidden">
@@ -22,7 +22,7 @@
                                 @else
                                     <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-ink text-sm font-bold text-signal">{{ strtoupper(mb_substr($user->name, 0, 1)) }}</span>
                                 @endif
-                                <div class="min-w-0"><p class="truncate font-semibold">{{ $user->name }}</p><p class="text-xs text-slate-500">{{ '@'.$user->username }}</p></div>
+                                <div class="min-w-0"><p class="truncate font-semibold">{{ $user->name }}</p><p class="text-xs text-slate-600">{{ '@'.$user->username }}</p></div>
                             </div>
                         </td>
                         <td class="hidden px-4 py-3 text-sm text-slate-600 md:table-cell">{{ $user->email }}</td>

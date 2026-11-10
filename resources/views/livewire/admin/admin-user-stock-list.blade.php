@@ -13,8 +13,8 @@
 
     <div class="flex flex-col gap-3 lg:flex-row lg:items-center">
         <div class="relative lg:w-80">
-            <span class="pointer-events-none absolute inset-y-0 left-3.5 grid place-items-center text-slate-400"><x-icon name="search" size="h-4 w-4" /></span>
-            <input type="search" wire:model.live.debounce.300ms="search" placeholder="Cari nama atau SKU" class="input pl-10">
+            <span class="pointer-events-none absolute inset-y-0 left-3.5 grid place-items-center text-slate-600"><x-icon name="search" size="h-4 w-4" /></span>
+            <input type="search" aria-label="Pencarian" wire:model.live.debounce.300ms="search" placeholder="Cari nama atau SKU" class="input pl-10">
         </div>
         <div class="flex flex-wrap gap-2">
             @foreach ($chips as $value => $label)
@@ -37,7 +37,7 @@
                             <span class="block max-w-64 truncate font-semibold">{{ $stock->name }}</span>
                             @if ($stock->sku) <span class="tag mt-1">{{ $stock->sku }}</span> @endif
                         </td>
-                        <td class="px-4 py-3 text-sm font-bold tabular-nums">{{ $stock->quantity }} <span class="font-medium text-slate-500">{{ $stock->unit }}</span></td>
+                        <td class="px-4 py-3 text-sm font-bold tabular-nums">{{ $stock->quantity }} <span class="font-medium text-slate-600">{{ $stock->unit }}</span></td>
                         <td class="hidden px-4 py-3 text-sm tabular-nums sm:table-cell">{{ $stock->min_stock }}</td>
                         <td class="hidden px-4 py-3 text-sm tabular-nums md:table-cell">{{ $stock->price === null ? '-' : 'Rp '.number_format((float) $stock->price, 2, ',', '.') }}</td>
                         <td class="px-4 py-3"><x-status-badge :status="$stock->status" /></td>

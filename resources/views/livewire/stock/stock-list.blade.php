@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="flex flex-wrap items-center gap-2">
-                <input type="file" wire:model="importFile" accept=".xlsx,.xls"
+                <input type="file" aria-label="Pilih file Excel untuk import" wire:model="importFile" accept=".xlsx,.xls"
                        class="max-w-60 text-sm text-slate-600 file:mr-3 file:cursor-pointer file:rounded-md file:border-0 file:bg-concrete file:px-3 file:py-2 file:text-sm file:font-semibold file:text-ink hover:file:bg-line">
                 <button type="submit" class="btn btn-dark" wire:loading.attr="disabled" wire:target="importFile,import">Import</button>
             </div>
@@ -46,8 +46,8 @@
     {{-- Pencarian + filter status --}}
     <div class="flex flex-col gap-3 lg:flex-row lg:items-center">
         <div class="relative lg:w-80">
-            <span class="pointer-events-none absolute inset-y-0 left-3.5 grid place-items-center text-slate-400"><x-icon name="search" size="h-4 w-4" /></span>
-            <input type="search" wire:model.live.debounce.300ms="search" placeholder="Cari nama atau SKU" class="input pl-10">
+            <span class="pointer-events-none absolute inset-y-0 left-3.5 grid place-items-center text-slate-600"><x-icon name="search" size="h-4 w-4" /></span>
+            <input type="search" aria-label="Pencarian" wire:model.live.debounce.300ms="search" placeholder="Cari nama atau SKU" class="input pl-10">
         </div>
         <div class="flex flex-wrap gap-2">
             @foreach ($chips as $value => $label)
@@ -72,18 +72,18 @@
                                 @if ($stock->coverUrl())
                                     <img src="{{ $stock->coverUrl() }}" alt="" class="h-12 w-12 shrink-0 rounded-lg border border-line object-cover">
                                 @else
-                                    <span class="grid h-12 w-12 shrink-0 place-items-center rounded-lg bg-concrete text-slate-400"><x-icon name="cube" size="h-6 w-6" /></span>
+                                    <span class="grid h-12 w-12 shrink-0 place-items-center rounded-lg bg-concrete text-slate-600"><x-icon name="cube" size="h-6 w-6" /></span>
                                 @endif
                                 <div class="min-w-0">
                                     <a href="{{ route('stocks.show', $stock) }}" class="block max-w-64 truncate font-semibold text-ink hover:underline hover:decoration-signal hover:decoration-2 hover:underline-offset-4">{{ $stock->name }}</a>
-                                    @if ($stock->sku) <span class="tag mt-1">{{ $stock->sku }}</span> @else <span class="text-xs text-slate-400">Tanpa SKU</span> @endif
+                                    @if ($stock->sku) <span class="tag mt-1">{{ $stock->sku }}</span> @else <span class="text-xs text-slate-600">Tanpa SKU</span> @endif
                                 </div>
                             </div>
                         </td>
                         <td class="px-4 py-3">
                             <div class="inline-flex items-center rounded-lg border border-line bg-white">
                                 <button wire:click="adjust({{ $stock->id }}, -1)" class="grid h-9 w-9 place-items-center rounded-l-lg text-slate-600 transition hover:bg-concrete hover:text-ink" aria-label="Kurangi satu {{ $stock->unit }}"><x-icon name="minus" size="h-4 w-4" /></button>
-                                <span class="min-w-20 border-x border-line px-3 text-center text-sm font-bold tabular-nums">{{ $stock->quantity }} <span class="font-medium text-slate-500">{{ $stock->unit }}</span></span>
+                                <span class="min-w-20 border-x border-line px-3 text-center text-sm font-bold tabular-nums">{{ $stock->quantity }} <span class="font-medium text-slate-600">{{ $stock->unit }}</span></span>
                                 <button wire:click="adjust({{ $stock->id }}, 1)" class="grid h-9 w-9 place-items-center rounded-r-lg text-slate-600 transition hover:bg-concrete hover:text-ink" aria-label="Tambah satu {{ $stock->unit }}"><x-icon name="plus" size="h-4 w-4" /></button>
                             </div>
                         </td>
@@ -91,9 +91,9 @@
                         <td class="px-4 py-3"><x-status-badge :status="$stock->status" /></td>
                         <td class="px-4 py-3">
                             <div class="flex justify-end gap-1">
-                                <a href="{{ route('stocks.show', $stock) }}" class="grid h-9 w-9 place-items-center rounded-lg text-slate-500 transition hover:bg-concrete hover:text-ink" title="Lihat detail" aria-label="Lihat detail {{ $stock->name }}"><x-icon name="eye" size="h-4 w-4" /></a>
-                                <button wire:click="edit({{ $stock->id }})" class="grid h-9 w-9 place-items-center rounded-lg text-slate-500 transition hover:bg-concrete hover:text-ink" title="Edit" aria-label="Edit {{ $stock->name }}"><x-icon name="pencil" size="h-4 w-4" /></button>
-                                <button wire:click="delete({{ $stock->id }})" wire:confirm="Hapus barang ini? Tindakan ini tidak dapat dibatalkan." class="grid h-9 w-9 place-items-center rounded-lg text-slate-500 transition hover:bg-red-50 hover:text-red-600" title="Hapus" aria-label="Hapus {{ $stock->name }}"><x-icon name="trash" size="h-4 w-4" /></button>
+                                <a href="{{ route('stocks.show', $stock) }}" class="grid h-9 w-9 place-items-center rounded-lg text-slate-600 transition hover:bg-concrete hover:text-ink" title="Lihat detail" aria-label="Lihat detail {{ $stock->name }}"><x-icon name="eye" size="h-4 w-4" /></a>
+                                <button wire:click="edit({{ $stock->id }})" class="grid h-9 w-9 place-items-center rounded-lg text-slate-600 transition hover:bg-concrete hover:text-ink" title="Edit" aria-label="Edit {{ $stock->name }}"><x-icon name="pencil" size="h-4 w-4" /></button>
+                                <button wire:click="delete({{ $stock->id }})" wire:confirm="Hapus barang ini? Tindakan ini tidak dapat dibatalkan." class="grid h-9 w-9 place-items-center rounded-lg text-slate-600 transition hover:bg-red-50 hover:text-red-600" title="Hapus" aria-label="Hapus {{ $stock->name }}"><x-icon name="trash" size="h-4 w-4" /></button>
                             </div>
                         </td>
                     </tr>
@@ -125,7 +125,7 @@
             <div class="anim-pop w-full max-w-2xl rounded-2xl bg-white shadow-2xl" role="dialog" aria-modal="true" aria-labelledby="form-title">
                 <div class="flex items-center justify-between border-b border-line px-6 py-4">
                     <h2 id="form-title" class="text-lg font-bold">{{ $editingId ? 'Edit barang' : 'Tambah barang' }}</h2>
-                    <button type="button" wire:click="closeForm" class="rounded-md p-1 text-slate-500 hover:bg-concrete hover:text-ink" aria-label="Tutup"><x-icon name="x" /></button>
+                    <button type="button" wire:click="closeForm" class="rounded-md p-1 text-slate-600 hover:bg-concrete hover:text-ink" aria-label="Tutup"><x-icon name="x" /></button>
                 </div>
                 <form wire:submit="save">
                     <div class="p-6">@include('livewire.stock.partials.fields')</div>
@@ -147,12 +147,12 @@
                         <span class="grid h-9 w-9 place-items-center rounded-lg bg-ink text-signal"><x-icon name="sparkles" size="h-5 w-5" /></span>
                         <div><h2 id="ai-title" class="text-lg font-bold leading-tight">Generate stok dengan AI</h2><p class="text-xs text-slate-600">Ceritakan kebutuhan Anda, periksa hasilnya, lalu simpan yang cocok.</p></div>
                     </div>
-                    <button type="button" wire:click="closeAi" class="rounded-md p-1 text-slate-500 hover:bg-concrete hover:text-ink" aria-label="Tutup"><x-icon name="x" /></button>
+                    <button type="button" wire:click="closeAi" class="rounded-md p-1 text-slate-600 hover:bg-concrete hover:text-ink" aria-label="Tutup"><x-icon name="x" /></button>
                 </div>
 
                 <div class="p-6">
                     <form wire:submit="generateAi" class="flex flex-wrap gap-3">
-                        <input type="text" wire:model="aiPrompt" placeholder="Contoh: perlengkapan kantor untuk tim 10 orang" class="input min-w-64 flex-1">
+                        <input type="text" aria-label="Kebutuhan stok" wire:model="aiPrompt" placeholder="Contoh: perlengkapan kantor untuk tim 10 orang" class="input min-w-64 flex-1">
                         <input type="number" min="1" max="10" wire:model="aiCount" class="input w-24 tabular-nums" aria-label="Jumlah item">
                         <button type="submit" class="btn btn-primary" wire:loading.attr="disabled" wire:target="generateAi">
                             <span wire:loading.remove wire:target="generateAi">Generate</span>
@@ -175,7 +175,7 @@
                                         <div class="min-w-0 flex-1">
                                             <p class="font-semibold">{{ $item['name'] }} @if ($item['sku']) <span class="tag ml-1">{{ $item['sku'] }}</span> @endif</p>
                                             <p class="mt-0.5 text-sm text-slate-600 tabular-nums">{{ $item['quantity'] }} {{ $item['unit'] }}, minimum {{ $item['min_stock'] }}, {{ $item['price'] === null ? 'harga belum diisi' : 'Rp '.number_format($item['price'], 2, ',', '.') }}</p>
-                                            @if ($item['description']) <p class="mt-1 text-sm text-slate-500">{{ $item['description'] }}</p> @endif
+                                            @if ($item['description']) <p class="mt-1 text-sm text-slate-600">{{ $item['description'] }}</p> @endif
                                         </div>
                                     </label>
                                 </li>

@@ -38,7 +38,7 @@
         <section class="panel overflow-hidden">
             <div class="grid lg:grid-cols-[1.4fr_1fr]">
                 <div class="p-6 sm:p-8">
-                    <h2 class="text-sm font-semibold text-slate-500">Kondisi stok</h2>
+                    <h2 class="text-sm font-semibold text-slate-600">Kondisi stok</h2>
                     <p class="mt-2 flex items-baseline gap-3">
                         <span class="text-6xl font-extrabold leading-none tracking-tight tabular-nums">{{ $summary['items'] }}</span>
                         <span class="text-lg font-semibold text-slate-600">jenis barang</span>
@@ -91,9 +91,9 @@
                        class="flex items-center gap-4 border-b border-line px-5 py-3.5 transition last:border-0 hover:bg-concrete/60">
                         <div class="min-w-0 flex-1">
                             <p class="truncate font-semibold">{{ $item->name }}</p>
-                            <p class="text-xs text-slate-500">@if ($isAdmin){{ $item->user->name }} - @endif Minimum {{ $item->min_stock }} {{ $item->unit }}</p>
+                            <p class="text-xs text-slate-600">@if ($isAdmin){{ $item->user->name }} - @endif Minimum {{ $item->min_stock }} {{ $item->unit }}</p>
                         </div>
-                        <span class="text-right"><span class="block text-lg font-bold tabular-nums">{{ $item->quantity }}</span><span class="text-xs text-slate-500">{{ $item->unit }}</span></span>
+                        <span class="text-right"><span class="block text-lg font-bold tabular-nums">{{ $item->quantity }}</span><span class="text-xs text-slate-600">{{ $item->unit }}</span></span>
                         <x-status-badge :status="$item->status" />
                     </a>
                 @empty
@@ -111,7 +111,7 @@
                     @foreach ($overview['top_users'] as $row)
                         <a href="{{ route('admin.users.stocks', $row) }}" wire:key="top-{{ $row->id }}" class="flex items-center gap-4 border-b border-line px-5 py-3.5 transition last:border-0 hover:bg-concrete/60">
                             <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-ink text-sm font-bold text-signal">{{ strtoupper(mb_substr($row->name, 0, 1)) }}</span>
-                            <div class="min-w-0 flex-1"><p class="truncate font-semibold">{{ $row->name }}</p><p class="text-xs text-slate-500">{{ '@'.$row->username }}</p></div>
+                            <div class="min-w-0 flex-1"><p class="truncate font-semibold">{{ $row->name }}</p><p class="text-xs text-slate-600">{{ '@'.$row->username }}</p></div>
                             <span class="text-sm font-semibold tabular-nums">{{ $row->stocks_count }} barang</span>
                         </a>
                     @endforeach
@@ -124,7 +124,7 @@
                     </div>
                     @foreach ($summary['recent'] as $item)
                         <a href="{{ route('stocks.show', $item) }}" wire:key="rec-{{ $item->id }}" class="flex items-center gap-4 border-b border-line px-5 py-3.5 transition last:border-0 hover:bg-concrete/60">
-                            <div class="min-w-0 flex-1"><p class="truncate font-semibold">{{ $item->name }}</p><p class="text-xs text-slate-500">{{ $item->sku ?? 'Tanpa SKU' }}</p></div>
+                            <div class="min-w-0 flex-1"><p class="truncate font-semibold">{{ $item->name }}</p><p class="text-xs text-slate-600">{{ $item->sku ?? 'Tanpa SKU' }}</p></div>
                             <span class="text-sm font-semibold tabular-nums">{{ $item->quantity }} {{ $item->unit }}</span>
                         </a>
                     @endforeach
@@ -137,7 +137,7 @@
                 <div class="border-b border-line px-5 py-4"><h2 class="font-bold">Barang terbaru dari semua pengguna</h2></div>
                 @foreach ($summary['recent'] as $item)
                     <div wire:key="rec-{{ $item->id }}" class="flex items-center gap-4 border-b border-line px-5 py-3.5 last:border-0">
-                        <div class="min-w-0 flex-1"><p class="truncate font-semibold">{{ $item->name }}</p><p class="text-xs text-slate-500">{{ $item->user->name }}</p></div>
+                        <div class="min-w-0 flex-1"><p class="truncate font-semibold">{{ $item->name }}</p><p class="text-xs text-slate-600">{{ $item->user->name }}</p></div>
                         <span class="text-sm font-semibold tabular-nums">{{ $item->quantity }} {{ $item->unit }}</span>
                         <x-status-badge :status="$item->status" />
                     </div>

@@ -25,7 +25,7 @@
                     @if ($stock->coverUrl())
                         <img src="{{ $stock->coverUrl() }}" alt="Gambar {{ $stock->name }}" class="h-full max-h-96 w-full object-cover">
                     @else
-                        <div class="grid h-full min-h-56 place-items-center text-slate-400"><span class="text-center"><x-icon name="photo" size="mx-auto h-12 w-12" /><span class="mt-2 block text-sm">Belum ada gambar</span></span></div>
+                        <div class="grid h-full min-h-56 place-items-center text-slate-600"><span class="text-center"><x-icon name="photo" size="mx-auto h-12 w-12" /><span class="mt-2 block text-sm">Belum ada gambar</span></span></div>
                     @endif
                 </div>
 
