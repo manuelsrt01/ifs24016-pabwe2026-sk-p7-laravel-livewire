@@ -20,9 +20,9 @@ enum StockStatus: string
     public function badgeClass(): string
     {
         return match ($this) {
-            self::Available => 'bg-green-100 text-green-800',
-            self::LowStock => 'bg-yellow-100 text-yellow-800',
-            self::OutOfStock => 'bg-red-100 text-red-800',
+            self::Available => 'bg-green-50 text-green-800 ring-1 ring-inset ring-green-600/25',
+            self::LowStock => 'bg-yellow-50 text-yellow-800 ring-1 ring-inset ring-yellow-600/30',
+            self::OutOfStock => 'bg-red-50 text-red-800 ring-1 ring-inset ring-red-600/25',
         };
     }
 

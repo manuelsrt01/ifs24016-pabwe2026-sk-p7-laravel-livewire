@@ -5,6 +5,7 @@ use App\Features\Admin\Livewire\UserList;
 use App\Features\Auth\Livewire\Login;
 use App\Features\Auth\Livewire\Register;
 use App\Features\Profile\Livewire\Profile;
+use App\Features\Stock\Livewire\Dashboard;
 use App\Features\Stock\Livewire\StockDetail;
 use App\Features\Stock\Livewire\StockList;
 use Illuminate\Http\Request;
@@ -28,6 +29,7 @@ Route::middleware('throttle:1000-per-second')->group(function () {
             return redirect()->route('login');
         })->name('logout');
 
+        Route::get('/dashboard', Dashboard::class)->name('dashboard');
         Route::get('/profile', Profile::class)->name('profile');
 
         Route::middleware(['role:member', 'owns.stock'])->group(function () {

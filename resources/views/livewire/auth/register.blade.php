@@ -1,17 +1,37 @@
-<div class="w-full max-w-sm rounded-lg bg-white p-6 shadow">
-    <h1 class="mb-5 text-xl font-bold">Daftar Akun</h1>
-
+<x-auth-shell title="Daftar Akun" subtitle="Buat akun untuk mulai mencatat stok barang Anda.">
     <form wire:submit="register" class="space-y-4">
-        @foreach ([['name','Nama','text'],['username','Username','text'],['email','Email','email'],['password','Password','password'],['password_confirmation','Konfirmasi Password','password']] as [$field,$label,$type])
+        <div>
+            <label for="register-name" class="label">Nama lengkap</label>
+            <input id="register-name" type="text" wire:model="name" autocomplete="name" class="input">
+            @error('name') <p class="mt-1.5 text-sm font-medium text-red-600">{{ $message }}</p> @enderror
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2">
             <div>
-                <label for="register-{{ $field }}" class="mb-1 block text-sm font-medium">{{ $label }}</label>
-                <input id="register-{{ $field }}" type="{{ $type }}" wire:model="{{ $field }}"
-                       class="w-full rounded border border-slate-300 px-3 py-2">
-                @error($field) <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                <label for="register-username" class="label">Username</label>
+                <input id="register-username" type="text" wire:model="username" autocomplete="username" class="input">
+                @error('username') <p class="mt-1.5 text-sm font-medium text-red-600">{{ $message }}</p> @enderror
             </div>
-        @endforeach
-        <button id="register-submit" type="submit" class="w-full rounded bg-slate-900 px-3 py-2 font-medium text-white hover:bg-slate-700">Daftar</button>
+            <div>
+                <label for="register-email" class="label">Email</label>
+                <input id="register-email" type="email" wire:model="email" autocomplete="email" class="input">
+                @error('email') <p class="mt-1.5 text-sm font-medium text-red-600">{{ $message }}</p> @enderror
+            </div>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2">
+            <div>
+                <label for="register-password" class="label">Password</label>
+                <input id="register-password" type="password" wire:model="password" autocomplete="new-password" class="input">
+                @error('password') <p class="mt-1.5 text-sm font-medium text-red-600">{{ $message }}</p> @enderror
+                <p class="mt-1.5 text-xs text-slate-500">Minimal 8 karakter.</p>
+            </div>
+            <div>
+                <label for="register-password_confirmation" class="label">Ulangi password</label>
+                <input id="register-password_confirmation" type="password" wire:model="password_confirmation" autocomplete="new-password" class="input">
+            </div>
+        </div>
+
+        <button id="register-submit" type="submit" class="btn btn-primary w-full py-3" wire:loading.attr="disabled" wire:target="register">Daftar</button>
     </form>
 
-    <p class="mt-4 text-center text-sm">Sudah punya akun? <a href="{{ route('login') }}" class="text-blue-600 underline">Masuk</a></p>
-</div>
+    <p class="mt-6 text-center text-sm text-slate-600">Sudah punya akun? <a href="{{ route('login') }}" class="font-semibold text-ink underline decoration-signal decoration-2 underline-offset-4">Masuk</a></p>
+</x-auth-shell>

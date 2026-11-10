@@ -1,41 +1,54 @@
-<div class="space-y-4">
-    <a href="{{ route('admin.users') }}" class="text-sm text-blue-600 hover:underline">← Kembali ke pengguna</a>
-    <div>
-        <h1 class="text-2xl font-bold">Stok milik {{ $user->name }}</h1>
-        <p class="text-sm text-slate-500">{{ '@'.$user->username }} · Mode baca saja</p>
+@php
+    $chips = ['' => 'Semua'];
+    foreach (\App\Features\Stock\Enums\StockStatus::cases() as $s) { $chips[$s->value] = $s->label(); }
+@endphp
+<div class="space-y-6">
+    <a href="{{ route('admin.users') }}" class="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 transition hover:text-ink"><x-icon name="arrow-left" size="h-4 w-4" /> Kembali ke pengguna</a>
+
+    <x-page-header :title="'Stok milik '.$user->name" :subtitle="'@'.$user->username" />
+
+    <div class="flex items-center gap-3 rounded-lg border border-signal-deep/40 bg-signal/20 px-4 py-3 text-sm font-medium">
+        <x-icon name="lock" size="h-5 w-5" /> Mode baca saja. Admin dapat melihat stok ini, tetapi tidak dapat mengubah atau menghapusnya.
     </div>
 
-    <div class="flex flex-wrap gap-3">
-        <input type="search" wire:model.live.debounce.300ms="search" placeholder="Cari nama / SKU…"
-               class="w-64 rounded border border-slate-300 px-3 py-2 text-sm">
-        <select wire:model.live="statusFilter" class="rounded border border-slate-300 px-3 py-2 text-sm">
-            <option value="">Semua status</option>
-            @foreach (\App\Features\Stock\Enums\StockStatus::cases() as $status)
-                <option value="{{ $status->value }}" wire:key="opt-{{ $status->value }}">{{ $status->label() }}</option>
+    <div class="flex flex-col gap-3 lg:flex-row lg:items-center">
+        <div class="relative lg:w-80">
+            <span class="pointer-events-none absolute inset-y-0 left-3.5 grid place-items-center text-slate-400"><x-icon name="search" size="h-4 w-4" /></span>
+            <input type="search" wire:model.live.debounce.300ms="search" placeholder="Cari nama atau SKU" class="input pl-10">
+        </div>
+        <div class="flex flex-wrap gap-2">
+            @foreach ($chips as $value => $label)
+                <button type="button" wire:key="chip-{{ $value === '' ? 'all' : $value }}" wire:click="$set('statusFilter', '{{ $value }}')"
+                        class="rounded-full border px-4 py-2 text-sm font-semibold transition {{ $statusFilter === (string) $value ? 'border-ink bg-ink text-white' : 'border-line bg-white text-slate-700 hover:border-ink' }}">{{ $label }}</button>
             @endforeach
-        </select>
+        </div>
     </div>
 
-    <div class="overflow-hidden rounded-lg bg-white shadow-sm">
-        <table class="min-w-full text-sm">
-            <thead class="bg-slate-50 text-left text-slate-600">
-                <tr><th class="px-4 py-3">Barang</th><th class="px-4 py-3">SKU</th><th class="px-4 py-3">Jumlah</th><th class="px-4 py-3">Min</th><th class="px-4 py-3">Harga</th><th class="px-4 py-3">Status</th></tr>
-            </thead>
-            <tbody class="divide-y">
-            @forelse ($stocks as $stock)
-                <tr wire:key="stock-{{ $stock->id }}">
-                    <td class="px-4 py-3 font-medium">{{ $stock->name }}</td>
-                    <td class="px-4 py-3">{{ $stock->sku ?? '-' }}</td>
-                    <td class="px-4 py-3">{{ $stock->quantity }} {{ $stock->unit }}</td>
-                    <td class="px-4 py-3">{{ $stock->min_stock }}</td>
-                    <td class="px-4 py-3">{{ $stock->price === null ? '-' : 'Rp '.number_format((float) $stock->price, 2, ',', '.') }}</td>
-                    <td class="px-4 py-3"><span class="rounded-full px-2 py-1 text-xs font-medium {{ $stock->status->badgeClass() }}">{{ $stock->status->label() }}</span></td>
-                </tr>
-            @empty
-                <tr><td colspan="6" class="px-4 py-8 text-center text-slate-500">Pengguna ini belum memiliki stok.</td></tr>
-            @endforelse
-            </tbody>
-        </table>
-    </div>
+    <section class="panel overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="min-w-full">
+                <thead class="border-b border-line bg-concrete/60">
+                    <tr><th class="th">Barang</th><th class="th">Jumlah</th><th class="th hidden sm:table-cell">Minimum</th><th class="th hidden md:table-cell">Harga</th><th class="th">Status</th></tr>
+                </thead>
+                <tbody class="divide-y divide-line">
+                @forelse ($stocks as $stock)
+                    <tr wire:key="stock-{{ $stock->id }}" class="transition hover:bg-concrete/40">
+                        <td class="px-4 py-3">
+                            <span class="block max-w-64 truncate font-semibold">{{ $stock->name }}</span>
+                            @if ($stock->sku) <span class="tag mt-1">{{ $stock->sku }}</span> @endif
+                        </td>
+                        <td class="px-4 py-3 text-sm font-bold tabular-nums">{{ $stock->quantity }} <span class="font-medium text-slate-500">{{ $stock->unit }}</span></td>
+                        <td class="hidden px-4 py-3 text-sm tabular-nums sm:table-cell">{{ $stock->min_stock }}</td>
+                        <td class="hidden px-4 py-3 text-sm tabular-nums md:table-cell">{{ $stock->price === null ? '-' : 'Rp '.number_format((float) $stock->price, 2, ',', '.') }}</td>
+                        <td class="px-4 py-3"><x-status-badge :status="$stock->status" /></td>
+                    </tr>
+                @empty
+                    <tr><td colspan="5" class="px-4 py-14 text-center"><p class="font-bold">Pengguna ini belum memiliki stok</p><p class="mt-1 text-sm text-slate-600">Stok akan muncul di sini setelah pengguna menambahkannya.</p></td></tr>
+                @endforelse
+                </tbody>
+            </table>
+        </div>
+    </section>
+
     {{ $stocks->links() }}
 </div>

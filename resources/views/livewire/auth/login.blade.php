@@ -1,23 +1,29 @@
-<div class="w-full max-w-sm rounded-lg bg-white p-6 shadow">
-    <h1 class="mb-1 text-xl font-bold">Masuk</h1>
-    <p class="mb-5 text-sm text-slate-500">Stock Inventory</p>
+<x-auth-shell title="Masuk" subtitle="Gunakan username atau email akun Anda.">
+    <form wire:submit="login" class="space-y-5">
+        <div>
+            <label for="login-username" class="label">Username atau email</label>
+            <input id="login-username" type="text" wire:model="username" autocomplete="username" autofocus class="input">
+            @error('username') <p class="mt-1.5 text-sm font-medium text-red-600">{{ $message }}</p> @enderror
+        </div>
 
-    <form wire:submit="login" class="space-y-4">
-        <div>
-            <label for="login-username" class="mb-1 block text-sm font-medium">Username atau Email</label>
-            <input id="login-username" type="text" wire:model="username" autocomplete="username"
-                   class="w-full rounded border border-slate-300 px-3 py-2">
-            @error('username') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+        <div x-data="{ show: false }">
+            <label for="login-password" class="label">Password</label>
+            <div class="relative">
+                <input id="login-password" type="password" :type="show ? 'text' : 'password'" wire:model="password" autocomplete="current-password" class="input pr-16">
+                <button type="button" @click="show = !show" class="absolute inset-y-0 right-0 px-4 text-xs font-semibold text-slate-500 hover:text-ink" x-text="show ? 'Sembunyi' : 'Tampil'">Tampil</button>
+            </div>
+            @error('password') <p class="mt-1.5 text-sm font-medium text-red-600">{{ $message }}</p> @enderror
         </div>
-        <div>
-            <label for="login-password" class="mb-1 block text-sm font-medium">Password</label>
-            <input id="login-password" type="password" wire:model="password" autocomplete="current-password"
-                   class="w-full rounded border border-slate-300 px-3 py-2">
-            @error('password') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
-        </div>
-        <label class="flex items-center gap-2 text-sm"><input type="checkbox" wire:model="remember"> Ingat saya</label>
-        <button id="login-submit" type="submit" class="w-full rounded bg-slate-900 px-3 py-2 font-medium text-white hover:bg-slate-700">Masuk</button>
+
+        <label class="flex items-center gap-2.5 text-sm text-slate-700">
+            <input type="checkbox" wire:model="remember" class="h-4 w-4 rounded border-line accent-ink"> Tetap masuk di perangkat ini
+        </label>
+
+        <button id="login-submit" type="submit" class="btn btn-primary w-full py-3" wire:loading.attr="disabled" wire:target="login">
+            <span wire:loading.remove wire:target="login">Masuk</span>
+            <span wire:loading wire:target="login">Memeriksa…</span>
+        </button>
     </form>
 
-    <p class="mt-4 text-center text-sm">Belum punya akun? <a href="{{ route('register') }}" class="text-blue-600 underline">Daftar</a></p>
-</div>
+    <p class="mt-6 text-center text-sm text-slate-600">Belum punya akun? <a href="{{ route('register') }}" class="font-semibold text-ink underline decoration-signal decoration-2 underline-offset-4">Daftar</a></p>
+</x-auth-shell>

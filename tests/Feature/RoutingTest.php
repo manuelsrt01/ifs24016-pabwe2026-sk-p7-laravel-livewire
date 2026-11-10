@@ -18,7 +18,7 @@ class RoutingTest extends TestCase
 
     public function test_guest_is_redirected_to_login(): void
     {
-        foreach (['/stocks', '/profile', '/admin/users'] as $uri) {
+        foreach (['/dashboard', '/stocks', '/profile', '/admin/users'] as $uri) {
             $this->get($uri)->assertRedirect(route('login'));
         }
     }

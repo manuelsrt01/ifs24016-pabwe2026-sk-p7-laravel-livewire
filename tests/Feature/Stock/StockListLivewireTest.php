@@ -304,7 +304,7 @@ class StockListLivewireTest extends TestCase
     {
         config(['openai.api_key' => '']);
 
-        $this->lw()->set('aiPrompt', 'perabot')->call('generateAi')
+        $this->lw()->call('openAi')->set('aiPrompt', 'perabot')->call('generateAi')
             ->assertSee('OPENAI_API_KEY belum dikonfigurasi');
     }
 

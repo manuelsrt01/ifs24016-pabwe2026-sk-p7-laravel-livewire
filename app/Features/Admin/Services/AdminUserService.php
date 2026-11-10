@@ -27,4 +27,14 @@ class AdminUserService
     {
         return $this->stocks->paginateForUser($user->id, $search, $status, $perPage);
     }
+
+    /** @return array{users: int, members: int, top_users: \Illuminate\Support\Collection<int, User>} */
+    public function overview(): array
+    {
+        return [
+            'users' => User::query()->count(),
+            'members' => User::query()->where('role', User::ROLE_MEMBER)->count(),
+            'top_users' => User::query()->withCount('stocks')->orderByDesc('stocks_count')->orderBy('id')->limit(5)->get(),
+        ];
+    }
 }
